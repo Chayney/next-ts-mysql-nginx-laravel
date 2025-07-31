@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { User } from '../types/user';
 import { Todo } from '../types/todo';
+// import styles from '../styles/todo.module.css';
 
 export default function Home() {
   const router = useRouter();
@@ -10,6 +11,28 @@ export default function Home() {
   const [todoText, setTodoText] = useState('');
   const [inCompleteTodos, setIncompleteTodos] = useState<Todo[]>([]);
   const [completeTodos, setCompleteTodos] = useState<Todo[]>([]);
+
+  // XSRFトークン取得
+  const getXsrfToken = (): string | null => {
+    const name = 'XSRF-TOKEN';
+    const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+    return match ? decodeURIComponent(match[2]) : null;
+  };
+
+  const fetchWithCsrf = async (url: string, options: RequestInit = {}) => {
+    await fetch('http://localhost/sanctum/csrf-cookie', {
+      credentials: 'include',
+    });
+    const xsrfToken = getXsrfToken();
+    return fetch(url, {
+      ...options,
+      credentials: 'include',
+      headers: {
+        ...(options.headers || {}),
+        'X-XSRF-TOKEN': xsrfToken ?? '',
+      },
+    });
+  };
 
   useEffect(() => {
     async function fetchUser() {
@@ -31,7 +54,9 @@ export default function Home() {
   }, [router]);
 
   const fetchTodos = async () => {
-    const res = await fetch('/api/todos');
+    const res = await fetch('http://localhost/api/todos', {
+      credentials: 'include',
+    });
     const data: Todo[] = await res.json();
     setIncompleteTodos(data.filter(todo => !todo.completed));
     setCompleteTodos(data.filter(todo => todo.completed));
@@ -49,7 +74,7 @@ export default function Home() {
 
   const onClickAdd = async () => {
     if (todoText === '') return;
-    await fetch('/api/todos', {
+    await fetchWithCsrf('http://localhost/api/todos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: todoText }),
@@ -60,7 +85,7 @@ export default function Home() {
 
   const onClickComplete = async (todo: Todo) => {
     const updatedTodo = { ...todo, completed: true };
-    const res = await fetch('/api/todos', {
+    const res = await fetchWithCsrf('http://localhost/api/todos', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedTodo),
@@ -73,7 +98,7 @@ export default function Home() {
 
   const onClickBack = async (todo: Todo) => {
     const updatedTodo = { ...todo, completed: false };
-    const res = await fetch('/api/todos', {
+    const res = await fetchWithCsrf('http://localhost/api/todos', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedTodo),
@@ -85,7 +110,9 @@ export default function Home() {
   };
 
   const onClickDelete = async (id: number) => {
-    await fetch(`/api/todos?id=${id}`, { method: 'DELETE' });
+    await fetchWithCsrf(`http://localhost/api/todos?id=${id}`, {
+      method: 'DELETE',
+    });
     fetchTodos();
   };
 
@@ -94,11 +121,7 @@ export default function Home() {
       credentials: 'include',
     });
 
-    const getCookie = (name: string) => {
-      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-      return match ? decodeURIComponent(match[2]) : null;
-    };
-    const xsrfToken = getCookie('XSRF-TOKEN');
+    const xsrfToken = getXsrfToken();
 
     await fetch('http://localhost/api/logout', {
       method: 'POST',
@@ -119,12 +142,10 @@ export default function Home() {
         <h1>Welcome {user.name}</h1>
         <button className="logout" onClick={logout}>ログアウト</button>
       </div>
-
       <div className="input-area">
         <input placeholder="Todoを入力" value={todoText} onChange={onChangeText} />
         <button onClick={onClickAdd}>追加</button>
       </div>
-
       <div className="incomplete-area">
         <p className="title">未完了のTodo</p>
         <ul>
