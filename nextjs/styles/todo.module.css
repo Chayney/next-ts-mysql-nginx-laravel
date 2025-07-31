@@ -3,20 +3,20 @@ body {
   color: #666;
 }
 
-input {
+.input {
   border-radius: 8px;
   border: none;
   padding: 6px 16px;
 }
 
-button {
+.button {
   border-radius: 8px;
   border: none;
   padding: 4px 16px;
   margin: 0px 2px;
 }
 
-button:hover {
+.button:hover {
   background-color: #79a8a9;
   color: #fff;
   cursor: pointer;
@@ -27,7 +27,11 @@ button:hover {
   align-items: center;
 }
 
-.input-area {
+.logout {
+  height: 40px;
+}
+
+.inputArea {
   background-color: #c6e5d9;
   width: 400px;
   height: 30px;
@@ -36,7 +40,7 @@ button:hover {
   border-radius: 8px;
 }
 
-.incomplete-area {
+.incompleteArea {
   border: 2px solid #aacfd0;
   width: 400px;
   min-height: 200px;
@@ -45,7 +49,7 @@ button:hover {
   border-radius: 8px;
 }
 
-.complete-area {
+.completeArea {
   border: 2px solid #aacfd0;
   width: 400px;
   min-height: 200px;
@@ -61,11 +65,11 @@ button:hover {
   font-weight: bold;
 }
 
-.list-row {
+.listRow {
   display: flex;
   align-items: center;
 }
 
-.todo-item {
+.todoItem {
   margin: 6px;
 }
