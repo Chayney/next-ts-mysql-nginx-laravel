@@ -17,7 +17,7 @@ config/sanctum.phpで確認
 SANCTUM_STATEFUL_DOMAINS=localhost:3000
 SESSION_DOMAIN=localhost  
 
-.envの編集後は自動的に編集内容が反映しないのではキャッシュをクリア  
+.envの編集後は自動的に編集内容が反映しないのでキャッシュをクリア  
 php artisan config:clear
 php artisan cache:clear  
 
