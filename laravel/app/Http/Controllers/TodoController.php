@@ -47,6 +47,13 @@ class TodoController extends Controller
         return response()->json($todo);
     }
 
+    public function edit($id)
+    {
+        $todo = Todo::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+        return response()->json($todo);
+    }
+
     public function destroy(Request $request)
     {
         $validated = $request->validate([
