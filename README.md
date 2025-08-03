@@ -38,4 +38,9 @@ config/cors.php
 ## 接続先
 Next.js http://localhost:3000/  
 Laravel http://localhost  
-phpMyAdmin http://localhost:8080
+phpMyAdmin http://localhost:8080  
+
+## ページURL  
+登録画面 http://localhost:3000/register  
+ログイン画面  http://localhost:3000/login  
+TOP画面  http://localhost:3000/ // ログインしていなければログイン画面にリダイレクト
