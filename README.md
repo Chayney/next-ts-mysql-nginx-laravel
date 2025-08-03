@@ -14,7 +14,7 @@ config/sanctum.phpで確認
 'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', 'localhost,localhost:3000')),  
 
 .envで追加  
-SANCTUM_STATEFUL_DOMAINS=localhost:3000
+SANCTUM_STATEFUL_DOMAINS=localhost:3000  
 SESSION_DOMAIN=localhost  
 
 .envの編集後は自動的に編集内容が反映しないのでキャッシュをクリア  
