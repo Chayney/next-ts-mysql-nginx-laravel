@@ -58,8 +58,8 @@ export default function Login() {
             <h1>Login</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={onSubmit}>
-                <input name="email" type="email" placeholder="Email" value={form.email} onChange={onChange} required />
-                <input name="password" type="password" placeholder="Password" value={form.password} onChange={onChange} required />
+                <input style={{ border: '1px solid #000' }} name="email" type="email" placeholder="Email" value={form.email} onChange={onChange} required />
+                <input style={{ border: '1px solid #000', marginLeft: '10px' }} name="password" type="password" placeholder="Password" value={form.password} onChange={onChange} required />
                 <button type="submit">Login</button>
             </form>
         </div>

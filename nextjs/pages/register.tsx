@@ -59,10 +59,11 @@ export default function Register() {
             <h1>Register</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={onSubmit}>
-                <input name="name" placeholder="Name" value={form.name} onChange={onChange} required />
-                <input name="email" type="email" placeholder="Email" value={form.email} onChange={onChange} required />
-                <input name="password" type="password" placeholder="Password" value={form.password} onChange={onChange} required />
+                <input style={{ border: '1px solid #000' }} name="name" placeholder="Name" value={form.name} onChange={onChange} required />
+                <input style={{ border: '1px solid #000', marginLeft: '10px' }} name="email" type="email" placeholder="Email" value={form.email} onChange={onChange} required />
+                <input style={{ border: '1px solid #000', marginLeft: '10px' }} name="password" type="password" placeholder="Password" value={form.password} onChange={onChange} required />
                 <input
+                    style={{ border: '1px solid #000', marginLeft: '10px' }}
                     name="password_confirmation"
                     type="password"
                     placeholder="Confirm Password"
