@@ -21,8 +21,21 @@ SESSION_DOMAIN=localhost
 php artisan config:clear
 php artisan cache:clear  
 
-app/Http/Kernel.php
+app/Http/Kernel.php  
+'api' => [
+\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+'throttle:api',
+\Illuminate\Routing\Middleware\SubstituteBindings::class,
+],
+
+config/cors.php  
+'paths' => ['api/*', 'sanctum/csrf-cookie'],  
+'allowed_origins' => ['http://localhost:3000'], // CORSの仕様上、'supports_credentials'をtrueにするとここでワイルドカードは使用出来ない。接続先の明示が必要  
+'allowed_methods' => ['*'],  
+'allowed_headers' => ['*'],  
+'supports_credentials' => true, // cookieなどの認証情報を許可  
+
 ## 接続先
 Next.js http://localhost:3000/  
 Laravel http://localhost  
-MySQL http://localhost:8080
+phpMyAdmin http://localhost:8080
