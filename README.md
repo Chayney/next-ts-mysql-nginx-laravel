@@ -22,11 +22,11 @@ php artisan config:clear
 php artisan cache:clear  
 
 app/Http/Kernel.php  
-'api' => [
-\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-'throttle:api',
-\Illuminate\Routing\Middleware\SubstituteBindings::class,
-],
+'api' => [  
+\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,  
+'throttle:api',  
+\Illuminate\Routing\Middleware\SubstituteBindings::class,  
+],  
 
 config/cors.php  
 'paths' => ['api/*', 'sanctum/csrf-cookie'],  
