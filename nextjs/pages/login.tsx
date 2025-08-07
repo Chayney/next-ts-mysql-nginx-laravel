@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 type LoginForm = {
@@ -10,6 +10,23 @@ export default function Login() {
     const router = useRouter();
     const [form, setForm] = useState<LoginForm>({ email: '', password: '' });
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const res = await fetch('http://localhost/api/user', {
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (res.status === 401) {
+                console.log('ログアウト状態');
+            }
+        };
+
+        checkAuth();
+    }, []);
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
